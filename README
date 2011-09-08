@@ -1,1 +1,3 @@
-Missile Command clone in Lua with LÖVE.
+Missile Command clone in Lua with LÖVE. http://love2d.org
+
+Run the build script to create the love file. 
