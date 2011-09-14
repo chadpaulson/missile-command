@@ -1,6 +1,8 @@
 function love.load()
     --love.mouse.setVisible(false)
     world = love.physics.newWorld(-800,-600,800,600,0,1)
+    boom = love.audio.newSource('audio/boom.wav','static')
+    missiles = {}
     bombs = {}
     explosions = {}
     cursor = {}
@@ -13,12 +15,46 @@ function love.update(dt)
     
     world:update(dt)
     
+    local shallwebomb = math.random(0,150)
+    
+    if shallwebomb == 33 then
+        bringemon()
+        bringemon()
+        bringemon()
+    end
+    
     for k,explosion in pairs(explosions) do
+
+        -- check for exploded missiles
+        for k,missile in pairs(missiles) do
+            if explosion.s:testPoint(missile.b:getX(),missile.b:getY()) then
+                missile.b:destroy()
+                missile.s:destroy()
+                --love.audio.play(boom)
+                boom:rewind()
+                boom:play()
+                table.remove(missiles,k)
+            end
+        end
         
-        if explosion.stage == 40 then
+        if explosion.stage == 20 then
+            explosion.b:destroy()
+            explosion.s:destroy()
             table.remove(explosions,k)
-        elseif explosion.stage < 40 then
+        elseif explosion.stage < 20 then
             explosion.stage = explosion.stage + 1
+            explosion.s:destroy()
+            explosion.s = love.physics.newPolygonShape(explosion.b, plotExplosion(explosion.stage))
+        end
+        
+    end
+    
+    for k,missile in pairs(missiles) do
+        
+        if missile.b:getX() > 600 then
+            missile.b:destroy()
+            missile.s:destroy()
+            table.remove(missiles,k)
         end
         
     end
@@ -26,17 +62,22 @@ function love.update(dt)
     for k,bomb in pairs(bombs) do
                 
         if testCollision(bomb.b,bomb.xtarget,bomb.ytarget) then
-            
-            bomb.b:destroy()
-            bomb.s:destroy()
-            table.remove(bombs,k)
-            
+                    
             local explosion = {}
             explosion.xorigin = bomb.xtarget
             explosion.yorigin = bomb.ytarget
             explosion.stage = 1
+            explosion.b = love.physics.newBody(world,explosion.xorigin,explosion.yorigin,1)
+            explosion.s = love.physics.newPolygonShape(explosion.b, plotExplosion(explosion.stage))
+            explosion.s:setCategory(1)
+            explosion.s:setMask(1)
+            explosion.s:setData('Explosion')
             table.insert(explosions,explosion)
             
+            bomb.b:destroy()
+            bomb.s:destroy()
+            table.remove(bombs,k)
+                        
         end
         
     end
@@ -61,16 +102,44 @@ function love.update(dt)
     
 end
 
+function bringemon()
+    
+    local missile = {}
+    local xcoords = {2,200,350,425,600,725,800}
+    local index = math.random(1,7)
+    local xcoord = xcoords[index]
+    missile.b = love.physics.newBody(world,xcoord,0,1)
+    missile.s = love.physics.newRectangleShape(missile.b,0,0,8,4)
+    missile.s:setData('Missile')
+    missile.s:setCategory(1)
+    missile.s:setMask(1)
+    missile.xtarget = xcoords[math.random(1,7)]
+    missile.ytarget = 600
+    
+    local vx = missile.xtarget - xcoord
+    local vy = missile.ytarget - 0
+    
+    missile.b:setBullet(true)
+    --missile.b:setLinearVelocity(vx,0)
+    missile.s:setFriction(1)
+    
+    table.insert(missiles,missile)
+    
+end
+
 function explode(x,y)
     
     local bomb = {}
     bomb.b = love.physics.newBody(world,400,500,1)
     bomb.s = love.physics.newRectangleShape(bomb.b,0,0,8,4)
+    bomb.s:setData('Bomb')
+    bomb.s:setCategory(1)
+    bomb.s:setMask(1)
     bomb.xtarget = x
     bomb.ytarget = y
     
-    vx = x - 400
-    vy = y - 500
+    local vx = x - 400
+    local vy = y - 500
     
     bomb.b:setBullet(true)
     bomb.b:setLinearVelocity(vx,vy)
@@ -111,9 +180,8 @@ function love.draw()
     
     for k,bomb in pairs(bombs) do
         love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
-        --love.graphics.circle('fill',bomb.b:getX(),bomb.b:getY(),bomb.s:getRadius())
         
-        x1,y1, x2,y2, x3,y3, x4,y4 = bomb.s:getBoundingBox()
+        x1, y1, x2, y2, x3, y3, x4, y4 = bomb.s:getBoundingBox()
         local w = x4 - x1
         local h = y1 - y2
         
@@ -122,14 +190,26 @@ function love.draw()
         love.graphics.rectangle('fill',bomb.b:getX(),bomb.b:getY(),w,h)
             
     end
+
+    for k,missile in pairs(missiles) do
+        
+        love.graphics.setColor(255,255,255)
+        mx1, my1, mx2, my2, mx3, my3, mx4, my4 = missile.s:getBoundingBox()
+        local w = mx4 - mx1
+        local h = my1 - my2
+        love.graphics.rectangle('fill',missile.b:getX(),missile.b:getY(),w,h)
+        
+    end
     
     for k,explosion in pairs(explosions) do
         
         love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
         
-        love.graphics.polygon('fill', plotExplosion(explosion.xorigin,explosion.yorigin,explosion.stage))
+        love.graphics.polygon('fill', explosion.s:getPoints())
         
     end
+    
+
     
     love.graphics.setColor(255,255,255)
     
@@ -144,12 +224,12 @@ function love.draw()
 end
 
 
-function plotExplosion(x,y,stage)
+function plotExplosion(stage)
     
-    if stage < 35 then
-        padding = stage * 1.1
-    elseif stage >= 35 then
-        padding = stage * -0.75
+    x = 0
+    y = 0
+    if stage < 20 then
+        padding = stage * 2
     end
     
     return x,y - padding, x + padding, y, x, y + padding, x - padding, y
