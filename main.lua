@@ -15,9 +15,9 @@ function love.update(dt)
     
     for k,explosion in pairs(explosions) do
         
-        if explosion.stage == 50 then
+        if explosion.stage == 40 then
             table.remove(explosions,k)
-        elseif explosion.stage < 50 then
+        elseif explosion.stage < 40 then
             explosion.stage = explosion.stage + 1
         end
         
@@ -161,8 +161,10 @@ end
 
 function plotExplosion(x,y,stage)
     
-    if stage < 50 then
+    if stage < 35 then
         padding = stage * 1.1
+    elseif stage >= 35 then
+        padding = stage * -0.75
     end
     
     return x,y - padding, x + padding, y, x, y + padding, x - padding, y
