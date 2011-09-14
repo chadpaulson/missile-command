@@ -1,7 +1,9 @@
 function love.load()
     --love.mouse.setVisible(false)
     world = love.physics.newWorld(-800,-600,800,600,0,1.1)
-    boom = love.audio.newSource('audio/boom.wav','static')
+    sounds = {}
+    sounds.boom = love.audio.newSource('audio/missile_explode.ogg','static')
+    sounds.launch = love.audio.newSource('audio/launch_bomb.ogg','static')
     missiles = {}
     bombs = {}
     explosions = {}
@@ -30,9 +32,8 @@ function love.update(dt)
             if explosion.s:testPoint(missile.b:getX(),missile.b:getY()) then
                 missile.b:destroy()
                 missile.s:destroy()
-                --love.audio.play(boom)
-                boom:rewind()
-                boom:play()
+                sounds.boom:rewind()
+                sounds.boom:play()
                 table.remove(missiles,k)
             end
         end
@@ -127,6 +128,10 @@ end
 
 function explode(x,y)
     
+    if sounds.boom:isStopped() then
+        sounds.launch:rewind()
+        sounds.launch:play()
+    end
     local bomb = {}
     bomb.b = love.physics.newBody(world,400,500,1)
     bomb.s = love.physics.newRectangleShape(bomb.b,0,0,8,4)
