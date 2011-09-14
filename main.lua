@@ -84,19 +84,19 @@ function love.update(dt)
     
     
     if love.keyboard.isDown('up') then
-        cursor.y = cursor.y - 4
+        cursor.y = cursor.y - 8
     end
     
     if love.keyboard.isDown('right') then
-        cursor.x = cursor.x + 4
+        cursor.x = cursor.x + 8
     end
     
     if love.keyboard.isDown('down') then
-        cursor.y = cursor.y + 4
+        cursor.y = cursor.y + 8
     end
     
     if love.keyboard.isDown('left') then
-        cursor.x = cursor.x - 4
+        cursor.x = cursor.x - 8
     end    
     
     
