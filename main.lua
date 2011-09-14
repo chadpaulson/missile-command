@@ -51,7 +51,7 @@ function love.update(dt)
     
     for k,missile in pairs(missiles) do
         
-        if missile.b:getX() > 600 then
+        if missile.b:getY() > 600 then
             missile.b:destroy()
             missile.s:destroy()
             table.remove(missiles,k)
@@ -108,19 +108,17 @@ function bringemon()
     local xcoords = {2,200,350,425,600,725,800}
     local index = math.random(1,7)
     local xcoord = xcoords[index]
-    missile.b = love.physics.newBody(world,xcoord,0,1)
+    local ycoord = 15
+    missile.b = love.physics.newBody(world,xcoord,ycoord,1)
     missile.s = love.physics.newRectangleShape(missile.b,0,0,8,4)
     missile.s:setData('Missile')
     missile.s:setCategory(1)
     missile.s:setMask(1)
-    missile.xtarget = xcoords[math.random(1,7)]
-    missile.ytarget = 600
-    
-    local vx = missile.xtarget - xcoord / 8
-    local vy = missile.ytarget - 0 / 8
-    
+    missile.xorigin = xcoord
+    missile.yorigin = ycoord
+        
     missile.b:setBullet(true)
-    missile.b:setLinearVelocity(3,3)
+    missile.b:setLinearVelocity(3,15)
     missile.s:setFriction(1)
     
     table.insert(missiles,missile)
@@ -192,6 +190,9 @@ function love.draw()
     end
 
     for k,missile in pairs(missiles) do
+        
+        love.graphics.setColor(255,0,0)
+        love.graphics.line(missile.xorigin,missile.yorigin,missile.xorigin + 8,missile.yorigin,missile.b:getX() + 8,missile.b:getY(),missile.b:getX(),missile.b:getY(),missile.xorigin,missile.yorigin)
         
         love.graphics.setColor(255,255,255)
         mx1, my1, mx2, my2, mx3, my3, mx4, my4 = missile.s:getBoundingBox()
