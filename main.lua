@@ -37,11 +37,11 @@ function love.update(dt)
             end
         end
         
-        if explosion.stage == 40 then
+        if explosion.stage == 75 then
             explosion.b:destroy()
             explosion.s:destroy()
             table.remove(explosions,k)
-        elseif explosion.stage < 40 then
+        elseif explosion.stage < 75 then
             explosion.stage = explosion.stage + 1
             explosion.s:destroy()
             explosion.s = love.physics.newPolygonShape(explosion.b, plotExplosion(explosion.stage))
@@ -67,7 +67,7 @@ function love.update(dt)
             explosion.xorigin = bomb.xtarget
             explosion.yorigin = bomb.ytarget
             explosion.stage = 1
-            explosion.b = love.physics.newBody(world,explosion.xorigin,explosion.yorigin,1)
+            explosion.b = love.physics.newBody(world,explosion.xorigin,explosion.yorigin,0)
             explosion.s = love.physics.newPolygonShape(explosion.b, plotExplosion(explosion.stage))
             explosion.s:setCategory(1)
             explosion.s:setMask(1)
@@ -229,10 +229,12 @@ function plotExplosion(stage)
     
     x = 0
     y = 0
-    if stage < 35 then
+    if stage < 15 then
         padding = stage * 2
-    elseif stage >= 35 then
-        padding = stage * -1.35
+    elseif stage > 15 and stage < 50 then
+        padding = 45
+    elseif stage >= 50 then
+        padding = 80 - stage
     end
     
     return x,y - padding, x + padding, y, x, y + padding, x - padding, y
