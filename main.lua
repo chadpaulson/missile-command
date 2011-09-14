@@ -59,21 +59,6 @@ function love.update(dt)
     end    
     
     
-    
-    --[[
-    for k,bomb in pairs(bombs) do
-        local rad = bomb.s:getRadius()
-        if rad < 35 then
-            rad = rad+0.1
-            bomb.s:destroy()
-            bomb.s = love.physics.newCircleShape(bomb.b,0,0,rad)
-        else
-            bomb.s:destroy()
-            bomb.b:destroy()
-            table.remove(bombs,k)
-        end
-    end]]
-    
 end
 
 function explode(x,y)
@@ -148,7 +133,7 @@ function love.draw()
     
     love.graphics.setColor(255,255,255)
     
-    love.graphics.rectangle('fill',cursor.x,cursor.y,36,8)    
+    love.graphics.rectangle('fill',cursor.x - 18,cursor.y,36,8)    
     
     
     if debug then
