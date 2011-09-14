@@ -1,6 +1,6 @@
 function love.load()
     --love.mouse.setVisible(false)
-    world = love.physics.newWorld(-800,-600,800,600,0,1)
+    world = love.physics.newWorld(-800,-600,800,600,0,1.1)
     boom = love.audio.newSource('audio/boom.wav','static')
     missiles = {}
     bombs = {}
@@ -37,11 +37,11 @@ function love.update(dt)
             end
         end
         
-        if explosion.stage == 20 then
+        if explosion.stage == 40 then
             explosion.b:destroy()
             explosion.s:destroy()
             table.remove(explosions,k)
-        elseif explosion.stage < 20 then
+        elseif explosion.stage < 40 then
             explosion.stage = explosion.stage + 1
             explosion.s:destroy()
             explosion.s = love.physics.newPolygonShape(explosion.b, plotExplosion(explosion.stage))
@@ -116,11 +116,11 @@ function bringemon()
     missile.xtarget = xcoords[math.random(1,7)]
     missile.ytarget = 600
     
-    local vx = missile.xtarget - xcoord
-    local vy = missile.ytarget - 0
+    local vx = missile.xtarget - xcoord / 8
+    local vy = missile.ytarget - 0 / 8
     
     missile.b:setBullet(true)
-    --missile.b:setLinearVelocity(vx,0)
+    missile.b:setLinearVelocity(3,3)
     missile.s:setFriction(1)
     
     table.insert(missiles,missile)
@@ -228,8 +228,10 @@ function plotExplosion(stage)
     
     x = 0
     y = 0
-    if stage < 20 then
+    if stage < 35 then
         padding = stage * 2
+    elseif stage >= 35 then
+        padding = stage * -1.35
     end
     
     return x,y - padding, x + padding, y, x, y + padding, x - padding, y
