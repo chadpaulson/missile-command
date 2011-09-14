@@ -1,5 +1,8 @@
 function love.load()
     --love.mouse.setVisible(false)
+    screen = {}
+    screen.width = 800
+    screen.height = 600
     world = love.physics.newWorld(-800,-600,800,600,0,1.1)
     sounds = {}
     sounds.boom = love.audio.newSource('audio/missile_explode.ogg','static')
@@ -10,6 +13,9 @@ function love.load()
     cursor = {}
     cursor.x = 350
     cursor.y = 350
+    bombtower = {}
+    bombtower.x = 400
+    bombtower.y = 500
     debug = true
 end
 
@@ -84,20 +90,28 @@ function love.update(dt)
     end
     
     
-    if love.keyboard.isDown('up') then
+    if love.keyboard.isDown('up') and cursor.y > 0 then
         cursor.y = cursor.y - 8
+    elseif cursor.y < 0 then
+        cursor.y = 0
     end
     
-    if love.keyboard.isDown('right') then
+    if love.keyboard.isDown('right') and cursor.x < screen.width then
         cursor.x = cursor.x + 8
+    elseif cursor.x > screen.width then
+        cursor.x = screen.width
     end
     
-    if love.keyboard.isDown('down') then
+    if love.keyboard.isDown('down') and cursor.y < bombtower.y then
         cursor.y = cursor.y + 8
+    elseif cursor.y > bombtower.y then
+        cursor.y = bombtower.y
     end
     
-    if love.keyboard.isDown('left') then
+    if love.keyboard.isDown('left') and cursor.x > 0 then
         cursor.x = cursor.x - 8
+    elseif cursor.x < 0 then
+        cursor.x = 0
     end    
     
     
@@ -141,8 +155,8 @@ function explode(x,y)
     bomb.xtarget = x
     bomb.ytarget = y
     
-    local vx = x - 400
-    local vy = y - 500
+    local vx = x - bombtower.x
+    local vy = y - bombtower.y
     
     bomb.b:setBullet(true)
     bomb.b:setLinearVelocity(vx,vy)
@@ -165,11 +179,11 @@ end
 
 function testCollision(body,x,y)
 
-    local vx1 = body:getX() - 400
-    local vy1 = body:getY() - 500
+    local vx1 = body:getX() - bombtower.x
+    local vy1 = body:getY() - bombtower.y
     
-    local vx2 = x - 400
-    local vy2 = y - 500
+    local vx2 = x - bombtower.x
+    local vy2 = y - bombtower.y
     
     if vx1 - vx2 < 4 and vy1 - vy2 < 4 then
         return true
