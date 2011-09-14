@@ -2,6 +2,7 @@ function love.load()
     --love.mouse.setVisible(false)
     world = love.physics.newWorld(-800,-600,800,600,0,1)
     bombs = {}
+    explosions = {}
     cursor = {}
     cursor.x = 350
     cursor.y = 350
@@ -12,14 +13,30 @@ function love.update(dt)
     
     world:update(dt)
     
+    for k,explosion in pairs(explosions) do
+        
+        if explosion.stage == 50 then
+            table.remove(explosions,k)
+        elseif explosion.stage < 50 then
+            explosion.stage = explosion.stage + 1
+        end
+        
+    end
+    
     for k,bomb in pairs(bombs) do
-        
-        local poop = testCollision(bomb.b,bomb.xtarget,bomb.ytarget)
-        
-        if poop then
+                
+        if testCollision(bomb.b,bomb.xtarget,bomb.ytarget) then
+            
             bomb.b:destroy()
             bomb.s:destroy()
             table.remove(bombs,k)
+            
+            local explosion = {}
+            explosion.xorigin = bomb.xtarget
+            explosion.yorigin = bomb.ytarget
+            explosion.stage = 1
+            table.insert(explosions,explosion)
+            
         end
         
     end
@@ -77,15 +94,6 @@ function explode(x,y)
     
 end
 
---[[
-function love.mousereleased(x,y,button)
-    
-    --if button == 'l' and table.getn(bombs) < 3 then
-        explode(x,y)
-    --end
-    
-end]]
-
 function love.keypressed(key)
     
     if key == 'escape' then
@@ -130,13 +138,33 @@ function love.draw()
             
     end
     
+    for k,explosion in pairs(explosions) do
+        
+        love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
+        
+        love.graphics.polygon('fill', plotExplosion(explosion.xorigin,explosion.yorigin,explosion.stage))
+        
+    end
+    
     love.graphics.setColor(255,255,255)
     
     love.graphics.rectangle('fill',cursor.x,cursor.y,36,8)    
+    
     
     if debug then
         love.graphics.setColor(255,255,255)
         love.graphics.print('(' .. cursor.x .. ',' .. cursor.y .. ')',8,8)
     end
+    
+end
+
+
+function plotExplosion(x,y,stage)
+    
+    if stage < 50 then
+        padding = stage * 1.1
+    end
+    
+    return x,y - padding, x + padding, y, x, y + padding, x - padding, y
     
 end
