@@ -14,13 +14,15 @@ function game:initialize()
     self.bombtower.x = 400
     self.bombtower.y = 500
     
+    self.audio:play('start_level')
+    
 end
 
 function game:update(dt)
     
     local shallwebomb = math.random(0,150)
     
-    if shallwebomb == 33 then
+    if shallwebomb == 33 and self.audio.start:isStopped() then
         self:launchMissile()
         self:launchMissile()
         self:launchMissile()
