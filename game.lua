@@ -22,13 +22,13 @@ end
 
 function game:update(dt)
     
-    if self.level.num_missiles == self.level.destroyed_missiles then
+    if self.level.num_missiles == self.level.launched_missiles and table.getn(self.missiles) == 0 and self.level.num_missiles > 0 then
         self:advanceLevel()
     end
     
     local shallwebomb = math.random(0,100)
     
-    if shallwebomb == 33 and self.audio.start:isStopped() and self.level.num_missiles > self.level.destroyed_missiles then
+    if shallwebomb == 33 and self.audio.start:isStopped() and self.level.num_missiles > self.level.launched_missiles then
         self:launchMissile()
     end
     
@@ -105,6 +105,8 @@ end
 
 function game:draw()
     
+    love.graphics.setBackgroundColor(self.level.background_color)
+    
     for k,b in pairs(self.bombs) do
         
         b:draw()
@@ -113,7 +115,7 @@ function game:draw()
 
     for k,m in pairs(self.missiles) do
         
-        m:draw(self.level.missile_tail_color)
+        m:draw(self.level.missile_tail_color,self.level.missile_color)
                 
     end
     
@@ -135,7 +137,8 @@ function game:launchMissile()
     local ycoord = 15
     local m = missile:new(world,xcoord,ycoord)
         
-    table.insert(self.missiles,m)    
+    table.insert(self.missiles,m)
+    self.level.launched_missiles = self.level.launched_missiles + 1
     
 end
 
