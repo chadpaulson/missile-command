@@ -174,8 +174,11 @@ function love.draw()
     cursor:draw()
     
     if debug then
+        
         love.graphics.setColor(255,255,255)
         love.graphics.print('(' .. cursor.x .. ',' .. cursor.y .. ')',8,8)
+        love.graphics.print(' ' .. love.timer.getFPS() .. ' FPS',8,20)
+        
     end
     
 end
