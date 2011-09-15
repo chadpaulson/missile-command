@@ -18,6 +18,11 @@ function game:initialize()
     self.score = score:new()
     self.cities = self:buildCities()
     self.audio:play('start_level')
+
+    font = love.graphics.newImage('gfx/imgfont.png')
+	font:setFilter('nearest','nearest')
+	imgfont = love.graphics.newImageFont(font," abcdefghijklmnopqrstuvwxyz0123456789.!'-:·")
+	love.graphics.setFont(imgfont)
     
 end
 
@@ -94,8 +99,8 @@ function game:update(dt)
         self.cursor.x = self.screen.width
     end
     
-    if love.keyboard.isDown('down') and self.cursor.y < self.bombtower.y then
-        self.cursor.y = self.cursor.y + 8
+    if love.keyboard.isDown('down') and self.cursor.y < (self.bombtower.y - self.cursor.height) then
+        self.cursor.y = self.cursor.y + self.cursor.height
     elseif self.cursor.y > self.bombtower.y then
         self.cursor.y = self.bombtower.y
     end
@@ -132,6 +137,10 @@ function game:draw()
     
     self.cursor:draw()
     
+    self.score:draw()
+    
+    self:drawInanimateObjects()
+        
 end
 
 function game:launchMissile()
@@ -139,7 +148,7 @@ function game:launchMissile()
     local xcoords = {2,200,350,425,600,725,800}
     local index = math.random(1,7)
     local xcoord = xcoords[index]
-    local ycoord = 15
+    local ycoord = 35
     local m = missile:new(world,xcoord,ycoord)
         
     table.insert(self.missiles,m)
@@ -182,6 +191,23 @@ function game:advanceLevel()
         self.audio:play('start_level')
         
     end
+    
+end
+
+function game:drawInanimateObjects()
+    
+    -- ground
+    love.graphics.setColor(self.level.ground_color)
+    love.graphics.rectangle('fill',0 ,525,self.screen.width,75)
+    love.graphics.rectangle('fill',0,500,50,25)
+    love.graphics.rectangle('fill',750,500,50,25)
+    love.graphics.rectangle('fill',300,515,200,10)
+    love.graphics.rectangle('fill',325,505,150,10)
+    love.graphics.rectangle('fill',350,495,100,10)
+    
+    -- bomb
+    love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
+    love.graphics.rectangle('fill',self.bombtower.x,self.bombtower.y - 8,8,4)    
     
 end
 

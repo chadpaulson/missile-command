@@ -11,7 +11,7 @@ require 'explosion'
 require 'bomb'
 
 function love.load()
-    
+        
     world = love.physics.newWorld(-800,-600,800,600,0,1.1)
 
     game = game:new()
