@@ -26,9 +26,9 @@ function missile:getInitialLinearVelocity()
     
 end
 
-function missile:draw()
+function missile:draw(color)
     
-    love.graphics.setColor(255,0,0)
+    love.graphics.setColor(color)
     love.graphics.line(self.xorigin,self.yorigin,self.xorigin + 8,self.yorigin,self.body:getX() + 8,self.body:getY(),self.body:getX(),self.body:getY(),self.xorigin,self.yorigin)
     
     love.graphics.setColor(255,255,255)

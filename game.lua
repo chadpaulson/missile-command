@@ -13,6 +13,8 @@ function game:initialize()
     self.bombtower = {}
     self.bombtower.x = 400
     self.bombtower.y = 500
+    self.level = level:new(1)
+    self.current_level = 1
     
     self.audio:play('start_level')
     
@@ -20,11 +22,13 @@ end
 
 function game:update(dt)
     
-    local shallwebomb = math.random(0,150)
+    if self.level.num_missiles == self.level.destroyed_missiles then
+        self:advanceLevel()
+    end
     
-    if shallwebomb == 33 and self.audio.start:isStopped() then
-        self:launchMissile()
-        self:launchMissile()
+    local shallwebomb = math.random(0,100)
+    
+    if shallwebomb == 33 and self.audio.start:isStopped() and self.level.num_missiles > self.level.destroyed_missiles then
         self:launchMissile()
     end
     
@@ -37,6 +41,7 @@ function game:update(dt)
                 missile.shape:destroy()
                 self.audio:play('boom')
                 table.remove(self.missiles,k)
+                self.level.destroyed_missiles = self.level.destroyed_missiles + 1
             end
         end
                 
@@ -52,6 +57,7 @@ function game:update(dt)
             missile.body:destroy()
             missile.shape:destroy()
             table.remove(self.missiles,k)
+            self.level.destroyed_missiles = self.level.destroyed_missiles + 1
         end
         
     end
@@ -107,7 +113,7 @@ function game:draw()
 
     for k,m in pairs(self.missiles) do
         
-        m:draw()
+        m:draw(self.level.missile_tail_color)
                 
     end
     
@@ -156,4 +162,16 @@ function game:testCollision(body,x,y)
 
     return false
 
+end
+
+function game:advanceLevel()
+    
+    if self.current_level < 9 then
+        
+        self.current_level = self.current_level + 1
+        self.level = level:new(self.current_level)
+        self.audio:play('start_level')
+        
+    end
+    
 end
