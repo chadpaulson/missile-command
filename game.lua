@@ -16,7 +16,7 @@ function game:initialize()
     self.level = level:new(1)
     self.current_level = 1
     self.score = score:new()
-    
+    self.cities = self:buildCities()
     self.audio:play('start_level')
     
 end
@@ -24,7 +24,10 @@ end
 function game:update(dt)
     
     if self.level.num_missiles == self.level.launched_missiles and table.getn(self.missiles) == 0 and self.level.num_missiles > 0 then
+        
+        self.score:add(self.level.num_bombs * 5) -- extra bomb bonus
         self:advanceLevel()
+        
     end
     
     local shallwebomb = math.random(0,100)
@@ -149,6 +152,7 @@ function game:shoot()
     local b = bomb:new(world,self.cursor.x,self.cursor.y)    
     
     table.insert(self.bombs,b)
+    self.level.num_bombs = self.level.num_bombs - 1
     self.audio:play('launch')
     
 end
@@ -178,5 +182,11 @@ function game:advanceLevel()
         self.audio:play('start_level')
         
     end
+    
+end
+
+function game:buildCities()
+    
+    return {}
     
 end

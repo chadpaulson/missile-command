@@ -6,6 +6,7 @@ function level:initialize(level_num)
     self.missile_tail_color = {}
     self.background_color = {}
     
+    self.num_bombs = 0
     self.num_missiles = 0
     self.destroyed_missiles = 0
     self.launched_missiles = 0
@@ -18,6 +19,7 @@ function level:loadLevel(level_num)
     
     self.destroyed_missiles = 0
     self.launched_missiles = 0
+    self.num_bombs = 30
     
     if level_num == 1 then
         
