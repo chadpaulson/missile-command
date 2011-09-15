@@ -33,10 +33,9 @@ end
 function missile:draw(tail_color, color)
     
     love.graphics.setColor(tail_color)
-    love.graphics.line(self.xorigin,self.yorigin,self.xorigin + 8,self.yorigin,self.body:getX() + 8,self.body:getY(),self.body:getX(),self.body:getY(),self.xorigin,self.yorigin)
+    love.graphics.line(self.xorigin,self.yorigin,self.xorigin + 4,self.yorigin,self.body:getX() - 4,self.body:getY(),self.body:getX(),self.body:getY(),self.xorigin,self.yorigin)
     
     love.graphics.setColor(color)
-
-    love.graphics.rectangle('fill',self.body:getX(),self.body:getY(),self.width,self.height)
+    love.graphics.polygon('fill',self.shape:getPoints())
     
 end

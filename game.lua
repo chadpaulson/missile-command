@@ -54,16 +54,39 @@ function game:update(dt)
                 self.score:add(25)
             end
         end
-                
+                    
         if not explosion:update() then
             table.remove(self.explosions,k)
         end
         
     end
-    
+
+
+    for ck,city in pairs(self.cities) do
+        
+        -- check for exploded missiles
+        for k,missile in pairs(self.missiles) do            
+        
+            if city.shape:testPoint(missile.body:getX(),missile.body:getY()) then
+                missile.body:destroy()
+                missile.shape:destroy()
+                self.audio:play('boom')
+                table.remove(self.missiles,k)
+                self.level.destroyed_missiles = self.level.destroyed_missiles + 1
+                
+                city.body:destroy()
+                city.shape:destroy()
+                table.remove(self.cities,ck)
+                break                
+            end
+            
+        end
+        
+    end
+        
     for k,missile in pairs(self.missiles) do
         
-        if missile.body:getY() > 600 then
+        if missile.body:getY() > 525 then
             missile.body:destroy()
             missile.shape:destroy()
             table.remove(self.missiles,k)
@@ -129,12 +152,18 @@ function game:draw()
                 
     end
     
+    for k,c in pairs(self.cities) do
+        
+        c:draw(self.level.city_color)
+        
+    end    
+    
     for k,e in pairs(self.explosions) do
         
         e:draw()
         
     end
-    
+        
     self.cursor:draw()
     
     self.score:draw()
@@ -213,6 +242,6 @@ end
 
 function game:buildCities()
     
-    return {}
+    return {city:new(105,513),city:new(176,513),city:new(247,513),city:new(554,513),city:new(625,513),city:new(696,513)}
     
 end
