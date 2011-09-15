@@ -13,6 +13,7 @@ function gamedebug:draw()
         love.graphics.setColor(255,255,255)
         love.graphics.print('(' .. game.cursor.x .. ',' .. game.cursor.y .. ')',8,8)
         love.graphics.print(' ' .. love.timer.getFPS() .. ' FPS',8,20)
+        love.graphics.print('SCORE: ' .. game.score.total,8,36)
         
     end
     

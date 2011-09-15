@@ -3,10 +3,11 @@ require 'game'
 require 'level'
 require 'gamedebug'
 require 'audio'
+require 'score'
+require 'cursor'
 require 'missile'
 require 'explosion'
 require 'bomb'
-require 'cursor'
 
 function love.load()
     

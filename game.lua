@@ -15,6 +15,7 @@ function game:initialize()
     self.bombtower.y = 500
     self.level = level:new(1)
     self.current_level = 1
+    self.score = score:new()
     
     self.audio:play('start_level')
     
@@ -42,6 +43,7 @@ function game:update(dt)
                 self.audio:play('boom')
                 table.remove(self.missiles,k)
                 self.level.destroyed_missiles = self.level.destroyed_missiles + 1
+                self.score:add(25)
             end
         end
                 
