@@ -6,8 +6,8 @@ function bomb:initialize(world,x,y)
     self.ytarget = y
     
     self.body = love.physics.newBody(world,400,500,1)
-    local vx = x - bombtower.x
-    local vy = y - bombtower.y
+    local vx = x - game.bombtower.x
+    local vy = y - game.bombtower.y
     self.body:setBullet(true)
     self.body:setLinearVelocity(vx,vy)    
     
