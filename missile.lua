@@ -22,7 +22,11 @@ end
 
 function missile:getInitialLinearVelocity()
     
-    return 3,15
+    if self.xorigin > 600 then
+        return -3,15
+    else
+        return 3,15
+    end
     
 end
 
