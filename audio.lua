@@ -5,6 +5,7 @@ function audio:initialize()
     self.boom = love.audio.newSource('audio/missile_explode.ogg','static')
     self.launch = love.audio.newSource('audio/launch_bomb.ogg','static')
     self.start = love.audio.newSource('audio/start_level.ogg')
+    self.over = love.audio.newSource('audio/game_over.ogg')
     
 end
 
@@ -28,6 +29,11 @@ function audio:play(sound)
         
         self.start:rewind()
         self.start:play()
+        
+    elseif sound == 'game_over' then
+        
+        self.over:rewind()
+        self.over:play()
         
     end
     

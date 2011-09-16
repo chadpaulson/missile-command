@@ -13,6 +13,8 @@ function level:initialize(level_num)
     self.destroyed_missiles = 0
     self.launched_missiles = 0
     self.destroyed_cities = 0
+    self.missile_speed = 0
+    self.missile_interval = 0
     
     self:loadLevel(level_num)
     
@@ -32,7 +34,9 @@ function level:loadLevel(level_num)
         self.background_color = {0,0,0}
         self.city_color = {20,104,230}
         self.ground_color = {230,158,20}
-        self.num_missiles = 4
+        self.num_missiles = 12
+        self.missile_speed = 1
+        self.missile_interval = 150
         
     elseif level_num == 2 then
         
@@ -41,7 +45,9 @@ function level:loadLevel(level_num)
         self.background_color = {147,0,0}
         self.city_color = {50,132,50}
         self.ground_color = {125,48,173}        
-        self.num_missiles = 6
+        self.num_missiles = 14
+        self.missile_speed = 2
+        self.missile_interval = 125
         
     elseif level_num == 3 then
         
@@ -50,7 +56,9 @@ function level:loadLevel(level_num)
         self.background_color = {0,0,0}
         self.city_color = {20,104,230}
         self.ground_color = {230,158,20}        
-        self.num_missiles = 8
+        self.num_missiles = 16
+        self.missile_speed = 3
+        self.missile_interval = 100
         
     elseif level_num == 4 then
         
@@ -59,7 +67,9 @@ function level:loadLevel(level_num)
         self.background_color = {0,0,0}
         self.city_color = {20,104,230}
         self.ground_color = {230,158,20}        
-        self.num_missiles = 10
+        self.num_missiles = 18
+        self.missile_speed = 4
+        self.missile_interval = 75
         
     elseif level_num == 5 then
         
@@ -68,7 +78,9 @@ function level:loadLevel(level_num)
         self.background_color = {50,132,50}
         self.city_color = {20,104,230}
         self.ground_color = {230,158,20}        
-        self.num_missiles = 12
+        self.num_missiles = 20
+        self.missile_speed = 5
+        self.missile_interval = 65
         
     elseif level_num == 6 then
         
@@ -77,7 +89,9 @@ function level:loadLevel(level_num)
         self.background_color = {0,0,0}
         self.city_color = {20,104,230}
         self.ground_color = {230,158,20}        
-        self.num_missiles = 14
+        self.num_missiles = 22
+        self.missile_speed = 6
+        self.missile_interval = 55
         
     elseif level_num == 7 then
         
@@ -86,7 +100,9 @@ function level:loadLevel(level_num)
         self.background_color = {0,0,0}
         self.city_color = {20,104,230}
         self.ground_color = {230,158,20}        
-        self.num_missiles = 16
+        self.num_missiles = 24
+        self.missile_speed = 7
+        self.missile_interval = 45
         
     elseif level_num == 8 then
         
@@ -95,7 +111,9 @@ function level:loadLevel(level_num)
         self.background_color = {0,0,0}
         self.city_color = {20,104,230}
         self.ground_color = {230,158,20}        
-        self.num_missiles = 18
+        self.num_missiles = 26
+        self.missile_speed = 8
+        self.missile_interval = 40
         
     elseif level_num == 9 then
         
@@ -104,7 +122,9 @@ function level:loadLevel(level_num)
         self.background_color = {0,0,0}
         self.city_color = {20,104,230}
         self.ground_color = {230,158,20}        
-        self.num_missiles = 20
+        self.num_missiles = 28
+        self.missile_speed = 9
+        self.missile_interval = 33
         
     end
     

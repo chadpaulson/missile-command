@@ -39,6 +39,10 @@ function love.keypressed(key)
         game:shoot()
     end
     
+    if game.game_over and game.audio.over:isStopped() then
+        game:startOver()
+    end
+    
 end
 
 function love.draw()

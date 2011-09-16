@@ -5,9 +5,9 @@ function missile:initialize(world,x,y)
     self.xorigin = x
     self.yorigin = y
     
-    self.body = love.physics.newBody(world,x,y,1)
+    self.body = love.physics.newBody(world,x,y,0.0001)
     self.body:setBullet(true)
-    self.body:setLinearVelocity(self:getInitialLinearVelocity())
+    self.body:setLinearVelocity(self:getInitialLinearVelocity(game.level.missile_speed))
     
     self.shape = love.physics.newRectangleShape(self.body,0,0,8,4)
     self.shape:setData('Missile')
@@ -20,13 +20,15 @@ function missile:initialize(world,x,y)
     
 end
 
-function missile:getInitialLinearVelocity()
+function missile:getInitialLinearVelocity(speed)
     
-    if self.xorigin > 600 then
-        return -3,15
-    else
-        return 3,15
-    end
+    local rate = (9 - speed) * 2
+    local xcoords = {97,105,700,176,247,554,625,696,400,683,550}
+    
+    vx = xcoords[math.random(1,11)] - self.xorigin
+    vy = 500 - self.yorigin
+    
+    return vx/rate,vy/rate
     
 end
 

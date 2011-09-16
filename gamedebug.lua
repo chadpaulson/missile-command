@@ -15,6 +15,7 @@ function gamedebug:draw()
         love.graphics.print(love.timer.getFPS() .. ' fps',8,20)
         love.graphics.print('score: ' .. game.score.total,8,36)
         love.graphics.print('bombs: ' .. game.level.num_bombs,8,48)
+        love.graphics.print('cities: ' .. table.getn(game.cities),8,64)
         
     end
     

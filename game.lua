@@ -13,11 +13,12 @@ function game:initialize()
     self.bombtower = {}
     self.bombtower.x = 400
     self.bombtower.y = 500
-    self.level = level:new(1)
-    self.current_level = 1
+    self.current_level = 9    
+    self.level = level:new(self.current_level)
     self.score = score:new()
     self.cities = self:buildCities()
     self.audio:play('start_level')
+    self.game_over = false
 
     font = love.graphics.newImage('gfx/imgfont.png')
 	font:setFilter('nearest','nearest')
@@ -27,15 +28,24 @@ function game:initialize()
 end
 
 function game:update(dt)
-    
-    if self.level.num_missiles == self.level.launched_missiles and table.getn(self.missiles) == 0 and self.level.num_missiles > 0 then
+        
+    if self.level.num_missiles == self.level.launched_missiles and table.getn(self.missiles) == 0 and self.level.num_missiles > 0 and not self.game_over then
         
         self.score:add(self.level.num_bombs * 5) -- extra bomb bonus
-        self:advanceLevel()
+        
+        if table.getn(self.cities) > 0 and self.current_level < 9 then
+        
+            self:advanceLevel()
+            
+        else
+            
+            self:gameOver()
+            
+        end
         
     end
     
-    local shallwebomb = math.random(0,100)
+    local shallwebomb = math.random(0,self.level.missile_interval)
     
     if shallwebomb == 33 and self.audio.start:isStopped() and self.level.num_missiles > self.level.launched_missiles then
         self:launchMissile()
@@ -174,8 +184,8 @@ end
 
 function game:launchMissile()
     
-    local xcoords = {2,200,350,425,600,725,800}
-    local index = math.random(1,7)
+    local xcoords = {97,105,700,176,247,554,625,696,400,683}
+    local index = math.random(1,10)
     local xcoord = xcoords[index]
     local ycoord = 35
     local m = missile:new(world,xcoord,ycoord)
@@ -211,6 +221,24 @@ function game:testCollision(body,x,y)
 
 end
 
+function game:gameOver()
+    
+    self.game_over = true
+    self.audio:play('game_over')
+    
+end
+
+function game:startOver()
+    
+    self.current_level = 1
+    self.cities = self:buildCities()
+    self.game_over = false
+    self.score.total = 0
+    self.level = level:new(self.current_level)
+    self.audio:play('start_level')
+    
+end
+
 function game:advanceLevel()
     
     if self.current_level < 9 then
@@ -218,6 +246,11 @@ function game:advanceLevel()
         self.current_level = self.current_level + 1
         self.level = level:new(self.current_level)
         self.audio:play('start_level')
+        
+    else
+        
+        self.current_level = 0
+        self.level = level:new(self.current_level)
         
     end
     
