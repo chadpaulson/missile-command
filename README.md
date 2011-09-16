@@ -8,5 +8,5 @@
 ## Installation
 
 1. Download and install LÖVE for OS X, Windows or Linux. http://love2d.org
-2. Run the build script to create `missile-command.love`.
+2. OS X and Linux users run the build script. Windows users [manually create](http://love2d.org/wiki/Game_Distribution "LOVE 2D Game Distribution") `missile-command.love`.
 3. Open `missile-command.love`.
