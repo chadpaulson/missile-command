@@ -13,7 +13,7 @@ function game:initialize()
     self.bombtower = {}
     self.bombtower.x = 400
     self.bombtower.y = 500
-    self.current_level = 9    
+    self.current_level = 1    
     self.level = level:new(self.current_level)
     self.score = score:new()
     self.cities = self:buildCities()

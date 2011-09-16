@@ -16,7 +16,7 @@ function love.load()
 
     game = game:new()
     
-    debug = gamedebug:new(true) -- set to false to disable debug display
+    debug = gamedebug:new(false) -- set to true to enable debug display
     love.mouse.setVisible(false)
     
 end
