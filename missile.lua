@@ -21,7 +21,7 @@ end
 function missile:getInitialLinearVelocity(speed)
     
     local rate = (9 - speed) * 2
-    local xcoords = {100,690,174,244,554,625,696,683,550}
+    local xcoords = {85,690,169,240,554,625,696,683,550}
     
     vx = xcoords[math.random(1,9)] - self.xorigin
     vy = 500 - self.yorigin

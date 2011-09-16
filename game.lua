@@ -184,8 +184,8 @@ end
 
 function game:launchMissile()
     
-    local xcoords = {97,105,700,176,247,554,625,696,400,683}
-    local index = math.random(1,10)
+    local xcoords = {85,120,105,700,176,247,554,625,696,400,683}
+    local index = math.random(1,11)
     local xcoord = xcoords[index]
     local ycoord = 35
     local m = missile:new(world,xcoord,ycoord)
