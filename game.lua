@@ -78,6 +78,9 @@ function game:update(dt)
         for k,missile in pairs(self.missiles) do            
         
             if city.shape:testPoint(missile.body:getX(),missile.body:getY()) then
+                local e = explosion:new(world,missile.body:getX(),missile.body:getY() - 10)
+                table.insert(self.explosions,e)
+                                
                 missile.body:destroy()
                 missile.shape:destroy()
                 self.audio:play('boom')
@@ -196,12 +199,19 @@ function game:launchMissile()
 end
 
 function game:shoot()
-        
-    local b = bomb:new(world,self.cursor.x,self.cursor.y)    
     
-    table.insert(self.bombs,b)
-    self.level.num_bombs = self.level.num_bombs - 1
-    self.audio:play('launch')
+    if self.level.num_bombs > 0 then
+            
+        local b = bomb:new(world,self.cursor.x,self.cursor.y)    
+        table.insert(self.bombs,b)
+        self.level.num_bombs = self.level.num_bombs - 1
+        self.audio:play('launch')
+        
+    else
+        
+        self.audio:play('no_ammo')
+        
+    end
     
 end
 
@@ -268,8 +278,12 @@ function game:drawInanimateObjects()
     love.graphics.rectangle('fill',350,495,100,10)
     
     -- bomb
-    love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
-    love.graphics.rectangle('fill',self.bombtower.x,self.bombtower.y - 8,8,4)    
+    if self.level.num_bombs > 0 then
+        
+        love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
+        love.graphics.rectangle('fill',self.bombtower.x,self.bombtower.y - 8,8,4)    
+        
+    end
     
 end
 

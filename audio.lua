@@ -4,8 +4,9 @@ function audio:initialize()
     
     self.boom = love.audio.newSource('audio/missile_explode.ogg','static')
     self.launch = love.audio.newSource('audio/launch_bomb.ogg','static')
-    self.start = love.audio.newSource('audio/start_level.ogg')
-    self.over = love.audio.newSource('audio/game_over.ogg')
+    self.start = love.audio.newSource('audio/start_level.ogg','static')
+    self.over = love.audio.newSource('audio/game_over.ogg','static')
+    self.noammo = love.audio.newSource('audio/no_ammo.ogg','static')
     
 end
 
@@ -34,6 +35,15 @@ function audio:play(sound)
         
         self.over:rewind()
         self.over:play()
+        
+    elseif sound == 'no_ammo' then
+        
+        if self.boom:isStopped() then
+        
+            self.noammo:rewind()
+            self.noammo:play()
+            
+        end
         
     end
 
