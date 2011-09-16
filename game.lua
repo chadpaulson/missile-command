@@ -253,9 +253,10 @@ function game:advanceLevel()
     
     if self.current_level < 9 then
         
+        self.audio:play('start_level')        
         self.current_level = self.current_level + 1
         self.level = level:new(self.current_level)
-        self.audio:play('start_level')
+        
         
     else
         
