@@ -17,6 +17,7 @@ function gamedebug:draw()
         love.graphics.print('score: ' .. game.score.total,8,46)
         love.graphics.print('bombs: ' .. game.level.num_bombs,8,62)
         love.graphics.print('cities: ' .. table.getn(game.cities),8,76)
+        love.graphics.print('missiles left: ' .. game.level.num_missiles - game.level.launched_missiles,8,86)
         
     end
     

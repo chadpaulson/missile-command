@@ -20,6 +20,9 @@ function game:initialize()
     self.audio:play('start_level')
     self.game_over = false
 
+    cron = require 'cron'
+    cron.every(self.level.missile_interval,launchMissiles)
+
     font = love.graphics.newImage('gfx/imgfont.png')
 	font:setFilter('nearest','nearest')
 	imgfont = love.graphics.newImageFont(font," abcdefghijklmnopqrstuvwxyz0123456789.!'-:·")
@@ -44,18 +47,17 @@ function game:update(dt)
         end
         
     end
-    
-    local shallwebomb = math.random(0,self.level.missile_interval)
-    
-    if shallwebomb == 33 and self.audio.start:isStopped() and self.level.num_missiles > self.level.launched_missiles then
-        self:launchMissile()
-    end
-    
-    for k,explosion in pairs(self.explosions) do
+            
+    cron.update(dt)
+            
+    for k,e in pairs(self.explosions) do
 
         -- check for exploded missiles
         for k,missile in pairs(self.missiles) do
-            if explosion.shape:testPoint(missile.body:getX(),missile.body:getY()) then
+            if e.shape:testPoint(missile.body:getX(),missile.body:getY()) then
+                local exp = explosion:new(world,missile.body:getX(),missile.body:getY() - 15)
+                table.insert(self.explosions,exp)
+                                
                 missile.body:destroy()
                 missile.shape:destroy()
                 self.audio:play('boom')
@@ -65,7 +67,7 @@ function game:update(dt)
             end
         end
                     
-        if not explosion:update() then
+        if not e:update() then
             table.remove(self.explosions,k)
         end
         
@@ -74,7 +76,6 @@ function game:update(dt)
 
     for ck,city in pairs(self.cities) do
         
-        -- check for exploded missiles
         for k,missile in pairs(self.missiles) do            
         
             if city.shape:testPoint(missile.body:getX(),missile.body:getY()) then
@@ -187,14 +188,18 @@ end
 
 function game:launchMissile()
     
-    local xcoords = {85,120,105,700,176,247,554,625,696,400,683}
-    local index = math.random(1,11)
-    local xcoord = xcoords[index]
-    local ycoord = 35
-    local m = missile:new(world,xcoord,ycoord)
+    if self.level.num_missiles > self.level.launched_missiles and self.audio.start:isStopped() then
+    
+        local xcoords = {85,120,105,700,176,247,554,625,696,400,683}
+        local index = math.random(1,11)
+        local xcoord = xcoords[index]
+        local ycoord = 35
+        local m = missile:new(world,xcoord,ycoord,self.level.missile_speed)
+
+        table.insert(self.missiles,m)
+        self.level.launched_missiles = self.level.launched_missiles + 1
         
-    table.insert(self.missiles,m)
-    self.level.launched_missiles = self.level.launched_missiles + 1
+    end
     
 end
 
@@ -240,12 +245,14 @@ end
 
 function game:startOver()
     
+    self.audio:play('start_level')
     self.current_level = 1
     self.cities = self:buildCities()
     self.game_over = false
     self.score.total = 0
     self.level = level:new(self.current_level)
-    self.audio:play('start_level')
+    cron.reset()
+    cron.every(self.level.missile_interval,launchMissiles)    
     
 end
 
@@ -254,14 +261,14 @@ function game:advanceLevel()
     if self.current_level < 9 then
         
         self.audio:play('start_level')        
-        self.current_level = self.current_level + 1
+        self.current_level = self.current_level + 1        
         self.level = level:new(self.current_level)
-        
+        cron.reset()
+        cron.every(self.level.missile_interval,launchMissiles)        
         
     else
         
-        self.current_level = 0
-        self.level = level:new(self.current_level)
+        self:gameOver()
         
     end
     
@@ -291,5 +298,15 @@ end
 function game:buildCities()
     
     return {city:new(105,513),city:new(176,513),city:new(247,513),city:new(554,513),city:new(625,513),city:new(696,513)}
+    
+end
+
+function launchMissiles()
+    
+    local num_missiles = math.random(1,game.level.max_concurrent_missiles)
+    
+    for i=1, num_missiles do
+        game:launchMissile()
+    end
     
 end

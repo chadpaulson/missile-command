@@ -1,6 +1,6 @@
 missile = class('missile')
 
-function missile:initialize(world,x,y)
+function missile:initialize(world,x,y,missile_speed)
     
     self.xorigin = x
     self.yorigin = y
@@ -9,7 +9,7 @@ function missile:initialize(world,x,y)
     
     self.body = love.physics.newBody(world,x,y,0.0001)
     self.body:setBullet(true)
-    self.body:setLinearVelocity(self:getInitialLinearVelocity(game.level.missile_speed))
+    self.body:setLinearVelocity(self:getInitialLinearVelocity(missile_speed))
     
     self.shape = love.physics.newRectangleShape(self.body,0,0,self.width,self.height)
     self.shape:setData('Missile')
