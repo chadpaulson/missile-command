@@ -13,6 +13,6 @@
 
 ## For The Lazy
 
-* Somewhat recent [`missile-command.love`](http://love2d.org/forums/download/file.php?id=3062&sid=45498dfcc7b5ed815e0d441cc7b8f263) build.
+* Somewhat recent [`missile-command.love`](http://love2d.org/forums/download/file.php?id=3072) build.
 * Missile Command gameplay video. http://www.youtube.com/watch?v=DviEWbUvv2Y
 
