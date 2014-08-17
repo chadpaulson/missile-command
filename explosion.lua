@@ -6,12 +6,10 @@ function explosion:initialize(world,x,y)
     self.x = x
     self.y = y
     
-    self.body = love.physics.newBody(world,self.x,self.y,0)
-    
-    self.shape = love.physics.newPolygonShape(self.body, self:plotExplosion(self.stage))
-    self.shape:setData('Explosion')
-    self.shape:setCategory(1)
-    self.shape:setMask(1)
+    self.body = love.physics.newBody(world,self.x,self.y,'dynamic')
+    self.shape = love.physics.newPolygonShape(self:plotExplosion(self.stage))
+
+    self.fixture = love.physics.newFixture(self.body, self.shape, 1.0)
     
 end
 
@@ -19,12 +17,10 @@ function explosion:update()
     
     if self.stage == 75 then
         self.body:destroy()
-        self.shape:destroy()
         return false
     elseif self.stage < 75 then
         self.stage = self.stage + 1
-        self.shape:destroy()
-        self.shape = love.physics.newPolygonShape(self.body, self:plotExplosion(self.stage))
+        self.shape = love.physics.newPolygonShape(self:plotExplosion(self.stage))
         return true
     end
     
@@ -49,6 +45,6 @@ function explosion:plotExplosion(stage)
         padding = 80 - stage
     end
     
-    return x,y - padding, x + padding, y, x, y + padding, x - padding, y    
+    return self.x,self.y - padding, self.x + padding, self.y, self.x, self.y + padding, self.x - padding, self.y    
     
 end

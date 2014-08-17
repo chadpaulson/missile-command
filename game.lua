@@ -24,14 +24,14 @@ function game:initialize()
     cron.every(self.level.missile_interval,launchMissiles)
 
     font = love.graphics.newImage('gfx/imgfont.png')
-	font:setFilter('nearest','nearest')
-	imgfont = love.graphics.newImageFont(font," abcdefghijklmnopqrstuvwxyz0123456789.!'-:·")
-	love.graphics.setFont(imgfont)
+    font:setFilter('nearest','nearest')
+    imgfont = love.graphics.newImageFont(font," abcdefghijklmnopqrstuvwxyz0123456789.!'-:·")
+    love.graphics.setFont(imgfont)
     
 end
 
 function game:update(dt)
-        
+
     if self.level.num_missiles == self.level.launched_missiles and table.getn(self.missiles) == 0 and self.level.num_missiles > 0 and not self.game_over then
         
         self.score:add(self.level.num_bombs * 5) -- extra bomb bonus
@@ -54,12 +54,11 @@ function game:update(dt)
 
         -- check for exploded missiles
         for k,missile in pairs(self.missiles) do
-            if e.shape:testPoint(missile.body:getX(),missile.body:getY()) then
+            if e.shape:testPoint(0,0,0,missile.body:getX(),missile.body:getY()) then
                 local exp = explosion:new(world,missile.body:getX(),missile.body:getY() - 15)
                 table.insert(self.explosions,exp)
                                 
                 missile.body:destroy()
-                missile.shape:destroy()
                 self.audio:play('boom')
                 table.remove(self.missiles,k)
                 self.level.destroyed_missiles = self.level.destroyed_missiles + 1
@@ -78,18 +77,16 @@ function game:update(dt)
         
         for k,missile in pairs(self.missiles) do            
         
-            if city.shape:testPoint(missile.body:getX(),missile.body:getY()) then
+            if city.shape:testPoint(0,0,0,missile.body:getX(),missile.body:getY()) then
                 local e = explosion:new(world,missile.body:getX(),missile.body:getY() - 10)
                 table.insert(self.explosions,e)
                                 
                 missile.body:destroy()
-                missile.shape:destroy()
                 self.audio:play('boom')
                 table.remove(self.missiles,k)
                 self.level.destroyed_missiles = self.level.destroyed_missiles + 1
                 
                 city.body:destroy()
-                city.shape:destroy()
                 table.remove(self.cities,ck)
                 break                
             end
@@ -102,7 +99,6 @@ function game:update(dt)
         
         if missile.body:getY() > 525 then
             missile.body:destroy()
-            missile.shape:destroy()
             table.remove(self.missiles,k)
             self.level.destroyed_missiles = self.level.destroyed_missiles + 1
         end
@@ -117,7 +113,6 @@ function game:update(dt)
             table.insert(self.explosions,e)
             
             b.body:destroy()
-            b.shape:destroy()
             table.remove(self.bombs,k)
                         
         end

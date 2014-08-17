@@ -7,14 +7,13 @@ function missile:initialize(world,x,y,missile_speed)
     self.width = 10
     self.height = 8
     
-    self.body = love.physics.newBody(world,x,y,0.0001)
+    self.body = love.physics.newBody(world,x,y,'kinematic')
     self.body:setBullet(true)
     self.body:setLinearVelocity(self:getInitialLinearVelocity(missile_speed))
     
-    self.shape = love.physics.newRectangleShape(self.body,0,0,self.width,self.height)
-    self.shape:setData('Missile')
-    self.shape:setCategory(1)
-    self.shape:setMask(1)
+    self.shape = love.physics.newRectangleShape(x,y,self.width,self.height)
+
+    self.fixture = love.physics.newFixture(self.body, self.shape, 0.1)
         
 end
 
@@ -33,9 +32,9 @@ end
 function missile:draw(tail_color, color)
     
     love.graphics.setColor(tail_color)
-    love.graphics.line(self.xorigin,self.yorigin,self.xorigin + self.height,self.yorigin,self.body:getX() - 4,self.body:getY(),self.body:getX(),self.body:getY(),self.xorigin,self.yorigin)
+    love.graphics.line(self.xorigin,self.yorigin,self.xorigin + self.height,self.yorigin,self.body:getX() + 4,self.body:getY(),self.body:getX(),self.body:getY(),self.xorigin,self.yorigin)
     
     love.graphics.setColor(color)
-    love.graphics.polygon('fill',self.shape:getPoints())
+    love.graphics.rectangle('fill',self.body:getX(),self.body:getY(),self.width,self.height)
     
 end

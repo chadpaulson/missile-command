@@ -5,19 +5,18 @@ function bomb:initialize(world,x,y)
     self.xtarget = x
     self.ytarget = y
     
-    self.body = love.physics.newBody(world,400,500,1)
+    self.body = love.physics.newBody(world,400,500,"kinematic")
     local vx = x - game.bombtower.x
     local vy = y - game.bombtower.y
     self.body:setBullet(true)
     self.body:setLinearVelocity(vx,vy)    
     
-    self.shape = love.physics.newRectangleShape(self.body,0,0,8,4)
-    local x1, y1, x2, y2, x3, y3, x4, y4 = self.shape:getBoundingBox()
-    self.width = x4 - x1
-    self.height = y1 - y2    
-    self.shape:setData('Bomb')
-    self.shape:setCategory(1)
-    self.shape:setMask(1)
+    self.shape = love.physics.newRectangleShape(x,y,8,4)
+    local x1, y1, x2, y2 = self.shape:computeAABB(0,0,0)
+    self.width = x2 - x1
+    self.height = y2 - y1
+
+    self.fixture = love.physics.newFixture(self.body, self.shape, 1.0)
     
 end
 
