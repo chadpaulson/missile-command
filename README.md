@@ -13,9 +13,8 @@
 
 ## Ready To Play Build
 
-* [`LÖVE 0.8`](http://love2d.org/forums/download/file.php?id=10473) (and above)
+* [`LÖVE 0.8`](http://love2d.org/forums/download/file.php?id=10478) (and above)
 * [`LÖVE 0.7.2`](http://love2d.org/forums/download/file.php?id=3072)
 
 ## Video
 * http://www.youtube.com/watch?v=DviEWbUvv2Y
-
