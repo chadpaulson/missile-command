@@ -185,8 +185,8 @@ function game:launchMissile()
     
     if self.level.num_missiles > self.level.launched_missiles and self.audio.start:isStopped() then
     
-        local xcoords = {85,120,105,700,176,247,554,625,696,400,683}
-        local index = math.random(1,11)
+        local xcoords = {112,115,110,120,105,700,176,247,554,625,696,400,683}
+        local index = math.random(1,13)
         local xcoord = xcoords[index]
         local ycoord = 35
         local m = missile:new(world,xcoord,ycoord,self.level.missile_speed)

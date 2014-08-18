@@ -9,7 +9,7 @@ function city:initialize(x,y)
     
     self.body = love.physics.newBody(world,x,y,'dynamic')
     self.shape = love.physics.newRectangleShape(x,y,self.width,self.height)
-    self.fixture = love.physics.newFixture(self.body, self.shape, 1.0)
+    self.fixture = love.physics.newFixture(self.body, self.shape, 0.1)
     
 end
 
