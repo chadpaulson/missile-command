@@ -34,7 +34,7 @@ function love.keypressed(key)
         love.event.push('q')
     end
         
-    if key == ' ' then
+    if key == 'space' then
         game:shoot()
     end
     
