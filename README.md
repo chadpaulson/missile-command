@@ -16,8 +16,7 @@ Clone of the popular 1980 arcade game, [Missle Command](https://en.wikipedia.org
 
 1. Download and install LÖVE for OS X, Windows or Linux. http://love2d.org
 2. Generate `missile-command.love` game distribution.
-    * OS X and Linux users run the build script via shell.
-        ```./build.sh```
+    * OS X and Linux users run the build script via `./build.sh`.
 
     * Windows users [manually create](http://love2d.org/wiki/Game_Distribution "LOVE 2D Game Distribution") game distribution.
 3. Open `missile-command.love`.
