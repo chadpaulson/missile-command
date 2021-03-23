@@ -19,7 +19,7 @@ function audio:play(sound)
         
     elseif sound == 'launch' then
         
-        if self.boom:isStopped() then
+        if not self.boom:isPlaying() then
             
             self.launch:stop()
             self.launch:play()
@@ -38,7 +38,7 @@ function audio:play(sound)
         
     elseif sound == 'no_ammo' then
         
-        if self.boom:isStopped() then
+        if not self.boom:isPlaying() then
         
             self.noammo:stop()
             self.noammo:play()
