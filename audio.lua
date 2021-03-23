@@ -14,33 +14,33 @@ function audio:play(sound)
     
     if sound == 'boom' then
         
-        self.boom:rewind()
+        self.boom:stop()
         self.boom:play()
         
     elseif sound == 'launch' then
         
         if self.boom:isStopped() then
             
-            self.launch:rewind()
+            self.launch:stop()
             self.launch:play()
             
         end
         
     elseif sound == 'start_level' then
         
-        self.start:rewind()
+        self.start:stop()
         self.start:play()
         
     elseif sound == 'game_over' then
         
-        self.over:rewind()
+        self.over:stop()
         self.over:play()
         
     elseif sound == 'no_ammo' then
         
         if self.boom:isStopped() then
         
-            self.noammo:rewind()
+            self.noammo:stop()
             self.noammo:play()
             
         end
