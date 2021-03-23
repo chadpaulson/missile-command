@@ -23,9 +23,7 @@ function game:initialize()
     cron = require 'cron'
     cron.every(self.level.missile_interval,launchMissiles)
 
-    font = love.graphics.newImage('gfx/imgfont.png')
-    font:setFilter('nearest','nearest')
-    imgfont = love.graphics.newImageFont(font," abcdefghijklmnopqrstuvwxyz0123456789.!'-:·")
+    imgfont = love.graphics.newImageFont('gfx/imgfont2.png'," ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
     love.graphics.setFont(imgfont)
     
 end
