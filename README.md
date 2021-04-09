@@ -7,11 +7,13 @@ Clone of the popular 1980 arcade game, [Missle Command](https://en.wikipedia.org
 * `up` `down` `left` `right` arrows move cursor
 * `spacebar` fires bomb
 
-## Ready To Play Builds
+## Build From Source
 
 1. Download and install LÖVE for OS X, Windows or Linux. http://love2d.org
-2. Download and open `missile-command.love` game distribution.
-    * [`LÖVE 0.10.x`](https://github.com/chadpaulson/missile-command/blob/master/missile-command.love?raw=true) (latest)
+2. Clone this repo and [load the game](https://love2d.org/wiki/Getting_Started#Running_Games).
+
+## Ready To Play Builds
+    * [`LÖVE 0.10.x`](https://github.com/chadpaulson/missile-command/blob/master/missile-command.love?raw=true)
     * [`LÖVE 0.9.x`](http://love2d.org/forums/download/file.php?id=10478)
     * [`LÖVE 0.7.2`](http://love2d.org/forums/download/file.php?id=3072)
 
