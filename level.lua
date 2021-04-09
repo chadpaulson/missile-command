@@ -31,9 +31,9 @@ function level:loadLevel(level_num)
         
         self.missile_color = {255,255,255}
         self.missile_tail_color = {255,0,0}
-        self.background_color = {0,0,0}
-        self.city_color = {20,104,230}
-        self.ground_color = {230,158,20}
+        self.background_color = {0,0,0,1}
+        self.city_color = {0,0,255,1}
+        self.ground_color = {230,158,00,1}
         self.num_missiles = 12
         self.missile_speed = 1
         self.missile_interval = 5
@@ -43,9 +43,9 @@ function level:loadLevel(level_num)
         
         self.missile_color = {125,48,173}
         self.missile_tail_color = {255,255,255}
-        self.background_color = {147,0,0}
-        self.city_color = {50,132,50}
-        self.ground_color = {125,48,173}        
+        self.background_color = {147,0,0,1}
+        self.city_color = {0,255,0,1}
+        self.ground_color = {125,0,173,1}
         self.num_missiles = 14
         self.missile_speed = 2
         self.missile_interval = 4
@@ -56,8 +56,8 @@ function level:loadLevel(level_num)
         self.missile_color = {255,255,255}
         self.missile_tail_color = {154,252,154}
         self.background_color = {0,0,0}
-        self.city_color = {11,30,182}
-        self.ground_color = {193,209,16}
+        self.city_color = {0,30,255,1}
+        self.ground_color = {193,209,0,1}
         self.num_missiles = 16
         self.missile_speed = 2
         self.missile_interval = 4
@@ -67,9 +67,9 @@ function level:loadLevel(level_num)
         
         self.missile_color = {255,255,255}
         self.missile_tail_color = {0,0,0}
-        self.background_color = {212,211,63}
-        self.city_color = {191,44,50}
-        self.ground_color = {91,189,93} 
+        self.background_color = {212,211,0,1}
+        self.city_color = {255,0,0,1}
+        self.ground_color = {0,102,50,1}
         self.num_missiles = 18
         self.missile_speed = 3
         self.missile_interval = 4
@@ -79,9 +79,9 @@ function level:loadLevel(level_num)
         
         self.missile_color = {0,0,0}
         self.missile_tail_color = {255,255,255}
-        self.background_color = {50,132,50}
-        self.city_color = {60,162,226}
-        self.ground_color = {0,0,0}        
+        self.background_color = {50,132,0,1}
+        self.city_color = {0,162,226,1}
+        self.ground_color = {0,0,0,1}
         self.num_missiles = 20
         self.missile_speed = 3
         self.missile_interval = 3
@@ -91,9 +91,9 @@ function level:loadLevel(level_num)
         
         self.missile_color = {255,255,255}
         self.missile_tail_color = {255,5,5}
-        self.background_color = {78,46,181}
-        self.city_color = {213,211,65}
-        self.ground_color = {91,189,93}        
+        self.background_color = {78,0,181,1}
+        self.city_color = {213,211,0,1}
+        self.ground_color = {0,189,93,1}
         self.num_missiles = 22
         self.missile_speed = 4
         self.missile_interval = 3
@@ -103,9 +103,9 @@ function level:loadLevel(level_num)
         
         self.missile_color = {255,255,255}
         self.missile_tail_color = {0,32,53}
-        self.background_color = {165,53,12}
-        self.city_color = {87,89,193}
-        self.ground_color = {0,0,0}        
+        self.background_color = {165,53,0,1}
+        self.city_color = {0,89,193,1}
+        self.ground_color = {0,0,0,1}
         self.num_missiles = 24
         self.missile_speed = 4
         self.missile_interval = 3
@@ -113,11 +113,11 @@ function level:loadLevel(level_num)
         
     elseif level_num == 8 then
         
-        self.missile_color = {0,0,0}
+        self.missile_color = {255,0,0}
         self.missile_tail_color = {235,235,235}
-        self.background_color = {70,13,2}
-        self.city_color = {255,255,255}
-        self.ground_color = {149,191,208}        
+        self.background_color = {0,0,0,1}
+        self.city_color = {255,255,255,1}
+        self.ground_color = {0,191,208,1}
         self.num_missiles = 26
         self.missile_speed = 4
         self.missile_interval = 2
@@ -127,9 +127,9 @@ function level:loadLevel(level_num)
         
         self.missile_color = {255,255,255}
         self.missile_tail_color = {246,0,255}
-        self.background_color = {0,0,0}
-        self.city_color = {82,251,59}
-        self.ground_color = {181,0,170}        
+        self.background_color = {0,0,0,1}
+        self.city_color = {82,251,59,1}
+        self.ground_color = {181,0,170,1}
         self.num_missiles = 28
         self.missile_speed = 5
         self.missile_interval = 2
