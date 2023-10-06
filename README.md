@@ -1,4 +1,4 @@
-[![Missile Command](http://i.imgur.com/wGUjY.png "Missile Command")](https://www.youtube.com/watch?v=9OOp6z5Ykw8)
+[![Missile Command](https://raw.githubusercontent.com/chadpaulson/missile-command/master/missle_command_screenshot.png "Missile Command")](https://www.youtube.com/watch?v=9OOp6z5Ykw8)
 
 Clone of the popular 1980 arcade game, [Missle Command](https://en.wikipedia.org/wiki/Missile_Command), designed by [Dave Theurer](https://en.wikipedia.org/wiki/Dave_Theurer) for Atari.
 
