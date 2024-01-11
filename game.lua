@@ -1,5 +1,10 @@
 game = class('game')
 
+-- CONSTANTS
+ORIGINAL_STEP_SIZE = 8 -- this is excessively fast on a modern computer
+-- anything above is dangerously fast, as it makes the cursor fly across screen
+FPS_DANGER = 60
+
 function game:initialize()
     
     self.screen = {}
@@ -118,25 +123,41 @@ function game:update(dt)
     end
     
     if love.keyboard.isDown('up') and self.cursor.y > 0 then
-        self.cursor.y = self.cursor.y - 8
+        local fps = love.timer.getFPS()
+        if fps > FPS_DANGER then
+	        local step_size = ORIGINAL_STEP_SIZE / love.timer.getFPS() * 60
+	        self.cursor.y = self.cursor.y - step_size
+        end
     elseif self.cursor.y < 0 then
         self.cursor.y = 0
     end
     
     if love.keyboard.isDown('right') and self.cursor.x < self.screen.width then
-        self.cursor.x = self.cursor.x + 8
+        local fps = love.timer.getFPS()
+        if fps > FPS_DANGER then
+	        local step_size = ORIGINAL_STEP_SIZE / love.timer.getFPS() * 60
+	        self.cursor.x = self.cursor.x + step_size
+        end
     elseif self.cursor.x > self.screen.width then
         self.cursor.x = self.screen.width
     end
     
     if love.keyboard.isDown('down') and self.cursor.y < (self.bombtower.y - self.cursor.height) then
-        self.cursor.y = self.cursor.y + self.cursor.height
+        local fps = love.timer.getFPS()
+        if fps > FPS_DANGER then
+	        local step_size = ORIGINAL_STEP_SIZE / love.timer.getFPS() * 60
+	        self.cursor.y = self.cursor.y + step_size
+        end
     elseif self.cursor.y > self.bombtower.y then
         self.cursor.y = self.bombtower.y
     end
     
     if love.keyboard.isDown('left') and self.cursor.x > 0 then
-        self.cursor.x = self.cursor.x - 8
+        local fps = love.timer.getFPS()
+       if fps > FPS_DANGER then
+	        local step_size = ORIGINAL_STEP_SIZE / love.timer.getFPS() * 60
+		self.cursor.x = self.cursor.x - step_size
+        end
     elseif self.cursor.x < 0 then
         self.cursor.x = 0
     end    
