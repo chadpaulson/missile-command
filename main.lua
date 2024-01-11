@@ -31,7 +31,7 @@ end
 function love.keypressed(key)
     
     if key == 'escape' then
-        love.event.push('q')
+        love.event.push('quit')
     end
         
     if key == 'space' then
